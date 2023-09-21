@@ -514,16 +514,16 @@ class TReS(object):
 			
 	
 			for img, label in pbartest:
-				img = torch.as_tensor(img.to(self.device))
-				label = torch.as_tensor(label.to(self.device))
+				img = torch.as_tensor(img)
+				label = torch.as_tensor(label.cpu())
 				pred,_ = self.net(img)
 
 				if self.config.multi_return:
 					pred_scores = pred_scores + pred[:,0].flatten().cpu().tolist()
-					gt_scores = gt_scores + label[:,0].flatten().cpu().tolist()
+					gt_scores = gt_scores + label[:,0].flatten().tolist()
 				else:
 					pred_scores = pred_scores + pred.flatten().cpu().tolist()
-					gt_scores = gt_scores + label.T[0].cpu().tolist()
+					gt_scores = gt_scores + label.T[0].tolist()
 				
 				
 				steps2 += 1
