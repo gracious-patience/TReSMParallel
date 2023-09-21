@@ -1,5 +1,5 @@
-
-
+import tarfile
+import os.path
 import os
 import argparse
 import random
@@ -139,7 +139,8 @@ def main(config):
     logger.info(PrintToLogg)
     logger.info('---------------------------')
 
-
+    with tarfile.open(f"{(config.svpath).split('Save_TReS')[0]}output.tar.gz", "w:gz") as tar:
+        tar.add(config.svpath, arcname=os.path.basename(config.svpath))
 
 if __name__ == '__main__':
     
