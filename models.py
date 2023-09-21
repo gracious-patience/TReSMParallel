@@ -8,6 +8,8 @@ import numpy as np
 from scipy import stats
 from tqdm import tqdm
 import os
+import os.path
+import tarfile
 import math
 import csv
 import copy
@@ -496,6 +498,9 @@ class TReS(object):
 				self.solver = torch.optim.Adam(self.paras, weight_decay=self.weight_decay)
 
 		print('Best val SRCC %f, PLCC %f' % (best_srcc, best_plcc))
+
+		with tarfile.open(f"{(self.config.svpath).split('Save_TReS')[0]}output.tar.gz", "w:gz") as tar:
+        		tar.add(self.config.svpath, arcname=os.path.basename(self.config.svpath))
 
 		return best_srcc, best_plcc
 
