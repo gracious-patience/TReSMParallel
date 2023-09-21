@@ -181,7 +181,7 @@ class CSIQFolder(data.Dataset):
         for neighbour_path in neighbours:
             # [1:-1] slices because I saved pathes like this: "'path'"
             # so, broadcasting it to str returns 'path'
-            sample_neighbour = pil_loader(f"{self.root}{neighbour_path[[pos for pos, char in enumerate(neighbour_path) if char == '/'][5]:]}")
+            sample_neighbour = pil_loader(f"{self.root}{neighbour_path.split('csiq')[1][:-1]}")
             sample_neighbour = self.transform(sample_neighbour)
             samples.append(sample_neighbour)
         targets += neighbours_target
