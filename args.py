@@ -55,6 +55,8 @@ def Configs():
     parser.add_argument('--ckpt', dest='ckpt', type=str, 
                         default='', 
                         help='path to ckpt if finetune')
+    parser.add_argument('--resnet_path', dest='resnet_path', type=str, 
+                        help='path to resnet50 default weights')
     parser.add_argument('--multi_ranking', dest='multi_ranking', type=int, default=0,
                         help='relative ranking loss for all outputs')
     parser.add_argument('--full_finetune', dest='full_finetune', type=int, default=0,
