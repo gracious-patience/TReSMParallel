@@ -159,6 +159,7 @@ class CSIQFolder(data.Dataset):
                     sample.append((f"{root}/dst_imgs_all/{row['image']}.{row['dst_type']}.{row['dst_lev']}.png" , str_2_str_list(row['neighbours'])[:k] , str_2_float_list(row['neighbours_labels'])[:k], row['dmos'] ))
         self.samples = sample
         self.transform = transform
+        self.root = root
 
     def __getitem__(self, index):
         """
@@ -180,7 +181,7 @@ class CSIQFolder(data.Dataset):
         for neighbour_path in neighbours:
             # [1:-1] slices because I saved pathes like this: "'path'"
             # so, broadcasting it to str returns 'path'
-            sample_neighbour = pil_loader(neighbour_path[1:-1])
+            sample_neighbour = pil_loader(f"{self.root}{neighbour_path[[pos for pos, char in enumerate(neighbour_path) if char == '/'][5]:]}")
             sample_neighbour = self.transform(sample_neighbour)
             samples.append(sample_neighbour)
         targets += neighbours_target
